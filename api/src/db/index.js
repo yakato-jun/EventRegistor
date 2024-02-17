@@ -14,11 +14,12 @@ export_functions.fetchUsers = () => {
   })
   .catch((err) => {
     console.error("[fetchUsers] error: " + err);
-    return null;
+    throw err;
   });
 };
 
 export_functions.findUserById = (id) => {
+  console.log("findUserById: " + id);
   return pool.execute(
     `SELECT
       *
@@ -35,7 +36,7 @@ export_functions.findUserById = (id) => {
   })
   .catch((err) => {
     console.error("[findUserById] error: " + err);
-    return null;
+    throw err;
   });
 }
 
@@ -56,7 +57,7 @@ export_functions.addUser = (userid, name, email, password) => {
   })
   .catch((err) => {
     console.error("[addUser] error: " + err);
-    return null;
+    throw err;
   });
 }
 

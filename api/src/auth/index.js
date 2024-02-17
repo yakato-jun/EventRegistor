@@ -3,6 +3,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 const localAuth = require('./local-auth');
+const db = require('../db');
 
 passport.use('local', localAuth);
 passport.serializeUser((user, done) => {
