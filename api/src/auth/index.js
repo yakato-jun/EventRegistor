@@ -1,14 +1,8 @@
 'use strict'
-const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 
 const localAuth = require('./local-auth');
-
-
-app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 passport.use('local', localAuth);
 passport.serializeUser((user, done) => {
@@ -25,6 +19,11 @@ passport.deserializeUser(async (userid, done) => {
 });
 
 module.exports = {
-  passport: passport
+  passport: passport,
+  initialize: (app) => {
+    app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: true }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+  }
 };
 

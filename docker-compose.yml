@@ -29,6 +29,26 @@ services:
       - app-network
     command: ["yarn", "start"]
 
+  mysql:
+    container_name: mysql
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./db/ddl:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+
+
 networks:
   app-network:
     driver: bridge
