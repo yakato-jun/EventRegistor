@@ -1,11 +1,19 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import { AppUser } from 'app-types';
 const router = Router();
 
 import db from '../db';
 import bcrypt from 'bcrypt';
 
 router.get('/', (req: Request, res: Response) => {
-  res.send('Hello, user world!');
+  if (req.isAuthenticated()) {
+    const user: AppUser  = req.user as AppUser;
+    res.status(200).json({
+      name: user.name
+    });
+  } else {
+    res.status(401).json({});
+  }
 });
 
 router.post('/regist',
