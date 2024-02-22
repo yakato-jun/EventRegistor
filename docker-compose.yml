@@ -4,13 +4,14 @@ services:
     container_name: node-app
     profiles: 
       - dev
+      - api-dev
     build:
-      context: api
+      context: event-register-api
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./api:/usr/src/app
+      - ./event-register-api:/usr/src/app
     environment:
       - NODE_ENV=development
     env_file:
@@ -23,13 +24,14 @@ services:
     container_name: node-app-prod
     profiles: 
       - prod
+      - api-prod
     build:
-      context: api
+      context: event-register-api
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./api:/usr/src/app
+      - ./event-register-api:/usr/src/app
     environment:
       - NODE_ENV=production
     env_file:
@@ -42,13 +44,14 @@ services:
     container_name: react-app
     profiles: 
       - dev
+      - ui-dev
     build:
-      context: react
+      context: event-register-ui
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     volumes:
-      - "./react:/usr/src/app"
+      - "./event-register-ui:/usr/src/app"
     environment:
       - NODE_ENV=development
       - PORT=8080
@@ -60,13 +63,14 @@ services:
     container_name: react-app-prod
     profiles: 
       - prod
+      - ui-prod
     build:
-      context: react
+      context: event-register-ui
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     volumes:
-      - "./react:/usr/src/app"
+      - "./event-register-ui:/usr/src/app"
     environment:
       - NODE_ENV=production
       - PORT=8080
@@ -78,6 +82,7 @@ services:
     container_name: mysql
     profiles: 
       - dev
+      - db-dev
     build:
       context: ./db
       dockerfile: Dockerfile
@@ -96,6 +101,7 @@ services:
     container_name: mysql-prod
     profiles: 
       - prod
+      - db-prod
     build:
       context: ./db
       dockerfile: Dockerfile
@@ -110,6 +116,8 @@ services:
     networks:
       - app-network
 
+
+  # TODO: add a reverse proxy service from nginx
 
 networks:
   app-network:
